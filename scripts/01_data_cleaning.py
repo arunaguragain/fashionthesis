@@ -1,22 +1,8 @@
-# ============================================
-# FASHION TREND PREDICTION - DATA CLEANING
-# By: Aruna Guragain
-# ============================================
-
 import pandas as pd
-import numpy as np
 import re
 import os
 
-# ============================================
-# STEP 1 - LOAD ALL FILES
-# ============================================
-
-print("="*50)
-print("STEP 1: LOADING ALL DATA FILES")
-print("="*50)
-
-# --- Instagram Files ---
+#step1 - load files
 instagram_files = [
     '../data/raw/instagram/dataset_instagram-hashtag-scraper(Batch1).csv',
     '../data/raw/instagram/dataset_instagram-hashtag-scraper(Batch2).csv',
@@ -28,7 +14,6 @@ instagram_files = [
     '../data/raw/instagram/dataset_instagram-hashtag-scraper(Batch8).csv',
 ]
 
-# --- TikTok Files ---
 tiktok_files = [
     '../data/raw/tiktok/dataset_tiktok-hashtag-scraper(Batch1).csv',
     '../data/raw/tiktok/dataset_tiktok-hashtag-scraper(Batch2).csv',
@@ -60,14 +45,7 @@ for f in tiktok_files:
     except Exception as e:
         print(f"❌ Error loading {f}: {e}")
 
-# ============================================
 # STEP 2 - STANDARDIZE COLUMNS
-# ============================================
-
-print("\n" + "="*50)
-print("STEP 2: STANDARDIZING COLUMNS")
-print("="*50)
-
 # Combine Instagram
 instagram_df = pd.concat(instagram_dfs, ignore_index=True)
 instagram_df = instagram_df.rename(columns={
@@ -106,24 +84,14 @@ tiktok_clean = tiktok_df[[
 
 print(f"TikTok posts loaded: {len(tiktok_clean)}")
 
-# ============================================
 # STEP 3 - COMBINE ALL PLATFORMS
-# ============================================
-
-print("\n" + "="*50)
-print("STEP 3: COMBINING ALL PLATFORMS")
-print("="*50)
-
 combined_df = pd.concat(
     [instagram_clean, tiktok_clean],
     ignore_index=True
 )
 print(f"Total combined posts: {len(combined_df)}")
 
-# ============================================
 # STEP 4 - CLEAN THE DATA
-# ============================================
-
 print("\n" + "="*50)
 print("STEP 4: CLEANING DATA")
 print("="*50)
@@ -149,7 +117,6 @@ def clean_text(text):
     return text
 
 combined_df['text_clean'] = combined_df['text'].apply(clean_text)
-print("✅ Text cleaned — URLs and mentions removed")
 
 # 4d - Filter fashion relevant posts
 fashion_keywords = [
@@ -168,8 +135,6 @@ combined_df['is_fashion'] = combined_df['text_clean'].str.lower().apply(
 
 before = len(combined_df)
 fashion_df = combined_df[combined_df['is_fashion']].copy()
-print(f"Non-fashion posts removed: {before - len(fashion_df)}")
-print(f"✅ Fashion relevant posts kept: {len(fashion_df)}")
 
 # 4e - Fix data types
 fashion_df['likes'] = pd.to_numeric(
@@ -182,7 +147,6 @@ fashion_df['views'] = pd.to_numeric(
     fashion_df['views'], errors='coerce').fillna(0).astype(int)
 fashion_df['date'] = pd.to_datetime(
     fashion_df['date'], errors='coerce')
-print("✅ Data types fixed")
 
 # 4f - Add language detection
 def detect_language(text):
@@ -191,15 +155,8 @@ def detect_language(text):
     return 'English'
 
 fashion_df['language'] = fashion_df['text_clean'].apply(detect_language)
-print("✅ Language detected")
 
-# ============================================
 # STEP 5 - SAVE CLEANED DATA
-# ============================================
-
-print("\n" + "="*50)
-print("STEP 5: SAVING CLEANED DATA")
-print("="*50)
 
 os.makedirs('../data/cleaned', exist_ok=True)
 
@@ -207,12 +164,8 @@ fashion_df.to_csv(
     '../data/cleaned/fashion_data_cleaned.csv',
     index=False
 )
-print(f"✅ Saved to: data/cleaned/fashion_data_cleaned.csv")
 
-# ============================================
 # STEP 6 - FINAL SUMMARY
-# ============================================
-
 print("\n" + "="*50)
 print("FINAL SUMMARY")
 print("="*50)
@@ -229,5 +182,5 @@ print(f"  Avg Likes    : {fashion_df['likes'].mean():.1f}")
 print(f"  Avg Comments : {fashion_df['comments'].mean():.1f}")
 print(f"  Avg Shares   : {fashion_df['shares'].mean():.1f}")
 print(f"  Avg Views    : {fashion_df['views'].mean():.1f}")
-print("\n✅ DATA CLEANING COMPLETE!")
+print("\n DATA CLEANING COMPLETE!")
 print("="*50)
