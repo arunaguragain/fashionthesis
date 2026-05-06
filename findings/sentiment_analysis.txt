@@ -1,0 +1,20 @@
+Key Findings From Sentiment Analysis
+
+1. Overall Sentiment
+65.6% Positive → Nepali females express enthusiasm for fashion 
+30.3% Neutral → Informational/shop posts 
+4.2% Negative → Very healthy ratio 
+
+2. Platform Difference 
+Instagram = 78.7% Positive (more personal expression)
+TikTok = 56.3% Positive (more mixed/commercial content)
+This difference is a strong thesis finding!
+
+3. Top Trending Category
+Traditional/Ethnic = 0.490 trend score 
+Means Nepali females aged 18-26 are trending TOWARDS traditional wear
+Very culturally significant finding for Nepal!
+
+4. Language
+94.3% English posts
+5.7% Nepali — both show similar positive sentiment
