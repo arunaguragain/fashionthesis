@@ -1,8 +1,3 @@
-# ============================================
-# FASHION TREND PREDICTION DASHBOARD
-# By: Aruna Guragain
-# Supervisor: Manoj Shrestha
-# ============================================
 
 import streamlit as st
 import pandas as pd
