@@ -1,8 +1,3 @@
-# ============================================
-# FASHION TREND PREDICTION - SENTIMENT ANALYSIS
-# By: Aruna Guragain
-# ============================================
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -13,32 +8,26 @@ import os
 import warnings
 warnings.filterwarnings('ignore')
 
-# ============================================
 # STEP 1 - LOAD CLEANED DATA
-# ============================================
-
 print("="*55)
 print("STEP 1: LOADING CLEANED FASHION DATA")
 print("="*55)
 
 df = pd.read_csv('../data/cleaned/fashion_data_cleaned.csv')
-print(f"✅ Loaded {len(df)} clean fashion posts")
+print(f" Loaded {len(df)} clean fashion posts")
 print(f"   Columns: {list(df.columns)}")
 
-# ============================================
 # STEP 2 - INITIALIZE VADER ANALYZER
-# ============================================
 
 print("\n" + "="*55)
 print("STEP 2: INITIALIZING VADER SENTIMENT ANALYZER")
 print("="*55)
 
 analyzer = SentimentIntensityAnalyzer()
-print("✅ VADER Analyzer ready!")
+print(" VADER Analyzer ready!")
 
-# ============================================
+
 # STEP 3 - PREPROCESS TEXT FOR SENTIMENT
-# ============================================
 
 print("\n" + "="*55)
 print("STEP 3: PREPROCESSING TEXT")
@@ -61,13 +50,11 @@ def preprocess_for_sentiment(text):
     return text
 
 df['text_sentiment'] = df['text_clean'].apply(preprocess_for_sentiment)
-print(f"✅ Text preprocessed for {len(df)} posts")
+print(f" Text preprocessed for {len(df)} posts")
 print(f"\nExample original : {df['text_clean'].iloc[0][:100]}")
 print(f"Example processed: {df['text_sentiment'].iloc[0][:100]}")
 
-# ============================================
 # STEP 4 - APPLY VADER SENTIMENT ANALYSIS
-# ============================================
 
 print("\n" + "="*55)
 print("STEP 4: APPLYING VADER SENTIMENT ANALYSIS")
@@ -112,7 +99,7 @@ df['vader_compound'] = scores_list.apply(lambda x: x['compound'])
 # Add sentiment label
 df['sentiment'] = df['vader_compound'].apply(get_sentiment_label)
 
-print(f"✅ Sentiment analysis complete for {len(df)} posts!")
+print(f" Sentiment analysis complete for {len(df)} posts!")
 
 # Show examples
 print("\n--- SAMPLE RESULTS ---")
@@ -122,9 +109,8 @@ for sentiment in ['Positive', 'Neutral', 'Negative']:
     print(f"\n{sentiment} (score: {score:.3f}):")
     print(f"  {sample[:120]}...")
 
-# ============================================
+
 # STEP 5 - SENTIMENT DISTRIBUTION ANALYSIS
-# ============================================
 
 print("\n" + "="*55)
 print("STEP 5: SENTIMENT DISTRIBUTION ANALYSIS")
@@ -159,9 +145,7 @@ language_sentiment = pd.crosstab(
 ) * 100
 print(language_sentiment.round(1).to_string())
 
-# ============================================
 # STEP 6 - FASHION CATEGORY CLASSIFICATION
-# ============================================
 
 print("\n" + "="*55)
 print("STEP 6: FASHION CATEGORY CLASSIFICATION")
@@ -221,9 +205,7 @@ for cat, count in category_counts.items():
     bar = '█' * int(pct / 2)
     print(f"  {cat:25} : {count:4} ({pct:.1f}%) {bar}")
 
-# ============================================
 # STEP 7 - TREND SCORING
-# ============================================
 
 print("\n" + "="*55)
 print("STEP 7: CALCULATING TREND SCORES")
@@ -273,7 +255,7 @@ print(f"  Average  : {df['trend_score'].mean():.4f}")
 print(f"  Maximum  : {df['trend_score'].max():.4f}")
 print(f"  Minimum  : {df['trend_score'].min():.4f}")
 
-print("\n🔥 TOP 5 TRENDING POSTS:")
+print("\n TOP 5 TRENDING POSTS:")
 top_trending = df.nlargest(5, 'trend_score')[
     ['platform', 'text_sentiment', 'sentiment',
      'fashion_category', 'trend_score']
@@ -283,9 +265,7 @@ for i, row in top_trending.iterrows():
           f"{row['fashion_category']} | Score: {row['trend_score']}")
     print(f"  {row['text_sentiment'][:100]}...")
 
-# ============================================
 # STEP 8 - VISUALIZATIONS
-# ============================================
 
 print("\n" + "="*55)
 print("STEP 8: CREATING VISUALIZATIONS")
@@ -399,12 +379,11 @@ axes[1,2].set_title('Language Distribution',
 plt.tight_layout()
 plt.savefig('../outputs/sentiment_analysis_results.png',
             dpi=150, bbox_inches='tight')
-print("✅ Chart saved to: outputs/sentiment_analysis_results.png")
+print(" Chart saved to: outputs/sentiment_analysis_results.png")
 plt.show()
 
-# ============================================
+
 # STEP 9 - SAVE FINAL DATASET
-# ============================================
 
 print("\n" + "="*55)
 print("STEP 9: SAVING FINAL DATASET WITH SENTIMENT")
@@ -414,11 +393,10 @@ df.to_csv(
     '../data/cleaned/fashion_data_with_sentiment.csv',
     index=False
 )
-print("✅ Saved: data/cleaned/fashion_data_with_sentiment.csv")
+print("Saved: data/cleaned/fashion_data_with_sentiment.csv")
 
-# ============================================
+
 # FINAL SUMMARY
-# ============================================
 
 print("\n" + "="*55)
 print("SENTIMENT ANALYSIS COMPLETE — FINAL SUMMARY")
@@ -431,5 +409,5 @@ print(f"\nTop Trending Category    : "
       f"{category_trend.idxmax()}")
 print(f"Avg Trend Score          : "
       f"{df['trend_score'].mean():.4f}")
-print(f"\n✅ Ready for Machine Learning step!")
+print(f"\n Ready for Machine Learning step!")
 print("="*55)

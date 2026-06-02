@@ -1,8 +1,3 @@
-# ============================================
-# FASHION TREND PREDICTION - MACHINE LEARNING
-# By: Aruna Guragain
-# ============================================
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -27,16 +22,14 @@ print("FASHION TREND PREDICTION — MACHINE LEARNING")
 print("By: Aruna Guragain")
 print("="*55)
 
-# ============================================
 # STEP 1 - LOAD DATA
-# ============================================
 
 print("\n" + "="*55)
 print("STEP 1: LOADING SENTIMENT DATA")
 print("="*55)
 
 df = pd.read_csv('../data/cleaned/fashion_data_with_sentiment.csv')
-print(f"✅ Loaded {len(df)} posts")
+print(f" Loaded {len(df)} posts")
 print(f"   Columns: {list(df.columns)}")
 
 # Check class distribution
@@ -45,9 +38,8 @@ print(df['sentiment'].value_counts().to_string())
 print(f"\nFashion Category Distribution:")
 print(df['fashion_category'].value_counts().to_string())
 
-# ============================================
+
 # STEP 2 - PREPARE FEATURES AND LABELS
-# ============================================
 
 print("\n" + "="*55)
 print("STEP 2: PREPARING FEATURES AND LABELS")
@@ -56,16 +48,16 @@ print("="*55)
 # Fill any missing text
 df['text_clean'] = df['text_clean'].fillna('')
 
-# ---- TARGET 1: Sentiment Prediction ----
+# TARGET 1: Sentiment Prediction 
 # X = text features
 # y = sentiment label (Positive/Neutral/Negative)
 X_text = df['text_clean']
 y_sentiment = df['sentiment']
 
-# ---- TARGET 2: Fashion Category Prediction ----
+# TARGET 2: Fashion Category Prediction 
 y_category = df['fashion_category']
 
-# ---- ADDITIONAL FEATURES ----
+# ADDITIONAL FEATURES 
 # Engagement features for trend scoring
 df['engagement_score'] = (
     df['likes'] * 0.4 +
@@ -74,13 +66,12 @@ df['engagement_score'] = (
     df['views'].clip(upper=1000000) / 1000000 * 100 * 0.1
 )
 
-print(f"✅ Text features prepared: {len(X_text)} samples")
-print(f"✅ Sentiment labels: {y_sentiment.nunique()} classes")
-print(f"✅ Category labels: {y_category.nunique()} classes")
+print(f" Text features prepared: {len(X_text)} samples")
+print(f" Sentiment labels: {y_sentiment.nunique()} classes")
+print(f" Category labels: {y_category.nunique()} classes")
 
-# ============================================
+
 # STEP 3 - TRAIN/TEST SPLIT
-# ============================================
 
 print("\n" + "="*55)
 print("STEP 3: SPLITTING DATA — TRAIN/TEST")
@@ -107,9 +98,7 @@ print(f"Testing set   : {len(X_test)} posts  (20%)")
 print(f"\nTraining sentiment distribution:")
 print(y_train_sent.value_counts().to_string())
 
-# ============================================
 # STEP 4 - TFIDF VECTORIZER
-# ============================================
 
 print("\n" + "="*55)
 print("STEP 4: TFIDF VECTORIZATION")
@@ -129,18 +118,17 @@ tfidf = TfidfVectorizer(
 X_train_tfidf = tfidf.fit_transform(X_train)
 X_test_tfidf  = tfidf.transform(X_test)
 
-print(f"✅ Vocabulary size : {len(tfidf.vocabulary_)} words")
-print(f"✅ Training matrix : {X_train_tfidf.shape}")
-print(f"✅ Testing matrix  : {X_test_tfidf.shape}")
+print(f" Vocabulary size : {len(tfidf.vocabulary_)} words")
+print(f" Training matrix : {X_train_tfidf.shape}")
+print(f" Testing matrix  : {X_test_tfidf.shape}")
 
 # Show top features
 feature_names = tfidf.get_feature_names_out()
 print(f"\nTop 20 most important words:")
 print(', '.join(feature_names[:20]))
 
-# ============================================
+
 # STEP 5 - MODEL 1: NAIVE BAYES
-# ============================================
 
 print("\n" + "="*55)
 print("STEP 5: MODEL 1 — NAIVE BAYES")
@@ -161,7 +149,7 @@ nb_cv_scores = cross_val_score(
     cv=5, scoring='accuracy'
 )
 
-print(f"✅ Naive Bayes Training Complete!")
+print(f" Naive Bayes Training Complete!")
 print(f"\n   Test Accuracy     : {nb_accuracy:.4f} ({nb_accuracy*100:.2f}%)")
 print(f"   CV Accuracy (5-fold): {nb_cv_scores.mean():.4f} "
       f"(±{nb_cv_scores.std():.4f})")
@@ -169,9 +157,7 @@ print(f"   CV Accuracy (5-fold): {nb_cv_scores.mean():.4f} "
 print(f"\nDetailed Classification Report:")
 print(classification_report(y_test_sent, nb_predictions))
 
-# ============================================
 # STEP 6 - MODEL 2: SVM
-# ============================================
 
 print("\n" + "="*55)
 print("STEP 6: MODEL 2 — SUPPORT VECTOR MACHINE (SVM)")
@@ -196,7 +182,7 @@ svm_cv_scores = cross_val_score(
     cv=5, scoring='accuracy'
 )
 
-print(f"✅ SVM Training Complete!")
+print(f" SVM Training Complete!")
 print(f"\n   Test Accuracy      : {svm_accuracy:.4f} ({svm_accuracy*100:.2f}%)")
 print(f"   CV Accuracy (5-fold): {svm_cv_scores.mean():.4f} "
       f"(±{svm_cv_scores.std():.4f})")
@@ -204,9 +190,7 @@ print(f"   CV Accuracy (5-fold): {svm_cv_scores.mean():.4f} "
 print(f"\nDetailed Classification Report:")
 print(classification_report(y_test_sent, svm_predictions))
 
-# ============================================
 # STEP 7 - MODEL COMPARISON
-# ============================================
 
 print("\n" + "="*55)
 print("STEP 7: MODEL COMPARISON")
@@ -235,12 +219,10 @@ else:
     best_predictions = nb_predictions
     best_accuracy    = nb_accuracy
 
-print(f"\n🏆 BEST MODEL: {best_model_name}")
+print(f"\n BEST MODEL: {best_model_name}")
 print(f"   Accuracy: {best_accuracy*100:.2f}%")
 
-# ============================================
 # STEP 8 - FASHION CATEGORY PREDICTION
-# ============================================
 
 print("\n" + "="*55)
 print("STEP 8: FASHION CATEGORY PREDICTION MODEL")
@@ -263,16 +245,14 @@ cat_cv_scores = cross_val_score(
     cv=5, scoring='accuracy'
 )
 
-print(f"✅ Category Prediction Model Complete!")
+print(f" Category Prediction Model Complete!")
 print(f"   Test Accuracy      : {cat_accuracy:.4f} ({cat_accuracy*100:.2f}%)")
 print(f"   CV Accuracy (5-fold): {cat_cv_scores.mean():.4f} "
       f"(±{cat_cv_scores.std():.4f})")
 print(f"\nDetailed Report:")
 print(classification_report(y_test_cat, cat_predictions))
 
-# ============================================
 # STEP 9 - TREND PREDICTION
-# ============================================
 
 print("\n" + "="*55)
 print("STEP 9: FASHION TREND PREDICTION")
@@ -307,7 +287,7 @@ trend_analysis = trend_analysis.sort_values(
 
 trend_analysis['rank'] = range(1, len(trend_analysis) + 1)
 
-print("🔥 FASHION TREND RANKINGS FOR NEPALI FEMALES (18-26):")
+print(" FASHION TREND RANKINGS FOR NEPALI FEMALES (18-26):")
 print("-"*60)
 for _, row in trend_analysis.iterrows():
     medal = ['🥇','🥈','🥉','4️⃣ ','5️⃣ ','6️⃣ '][int(row['rank'])-1]
@@ -318,9 +298,7 @@ for _, row in trend_analysis.iterrows():
     print(f"   Avg Likes        : {row['avg_likes']:.0f}")
     print(f"   Avg Views        : {row['avg_views']:.0f}")
 
-# ============================================
 # STEP 10 - VISUALIZATIONS
-# ============================================
 
 print("\n" + "="*55)
 print("STEP 10: CREATING ML VISUALIZATIONS")
@@ -328,7 +306,7 @@ print("="*55)
 
 os.makedirs('../outputs', exist_ok=True)
 
-# --- Chart 4: Model Comparison ---
+#  Chart 4: Model Comparison 
 fig, axes = plt.subplots(1, 3, figsize=(18, 5))
 fig.suptitle(
     'Machine Learning Model Results\n'
@@ -399,9 +377,9 @@ plt.tight_layout(pad=3.0)
 plt.savefig('../outputs/chart4_ml_results.png',
             dpi=150, bbox_inches='tight')
 plt.show()
-print("✅ Chart 4 saved: chart4_ml_results.png")
+print(" Chart 4 saved: chart4_ml_results.png")
 
-# --- Chart 5: Cross Validation Scores ---
+#  Chart 5: Cross Validation Scores 
 fig2, axes2 = plt.subplots(1, 2, figsize=(14, 5))
 fig2.suptitle(
     'Cross Validation Analysis\n'
@@ -450,11 +428,10 @@ plt.tight_layout(pad=3.0)
 plt.savefig('../outputs/chart5_cv_analysis.png',
             dpi=150, bbox_inches='tight')
 plt.show()
-print("✅ Chart 5 saved: chart5_cv_analysis.png")
+print(" Chart 5 saved: chart5_cv_analysis.png")
 
-# ============================================
+
 # STEP 11 - LIVE PREDICTION DEMO
-# ============================================
 
 print("\n" + "="*55)
 print("STEP 11: LIVE PREDICTION DEMO")
@@ -475,9 +452,9 @@ def predict_fashion_trend(text):
     analyzer  = SentimentIntensityAnalyzer()
     score     = analyzer.polarity_scores(text)['compound']
 
-    trend_potential = "🔥 HIGH" if score > 0.3 else \
-                      "📈 MEDIUM" if score > 0 else \
-                      "📉 LOW"
+    trend_potential = " HIGH" if score > 0.3 else \
+                      " MEDIUM" if score > 0 else \
+                      " LOW"
 
     return {
         'text'           : text[:80] + '...',
@@ -516,9 +493,7 @@ for i, post in enumerate(test_posts, 1):
     print(f"  Trending  : {result['trend_potential']}")
     print()
 
-# ============================================
 # STEP 12 - SAVE RESULTS
-# ============================================
 
 print("="*55)
 print("STEP 12: SAVING ALL RESULTS")
@@ -529,18 +504,17 @@ trend_analysis.to_csv(
     '../data/cleaned/trend_analysis_results.csv',
     index=False
 )
-print("✅ Saved: data/cleaned/trend_analysis_results.csv")
+print(" Saved: data/cleaned/trend_analysis_results.csv")
 
 # Save final complete dataset
 df.to_csv(
     '../data/cleaned/fashion_data_final.csv',
     index=False
 )
-print("✅ Saved: data/cleaned/fashion_data_final.csv")
+print(" Saved: data/cleaned/fashion_data_final.csv")
 
-# ============================================
+
 # FINAL SUMMARY
-# ============================================
 
 print("\n" + "="*55)
 print("MACHINE LEARNING COMPLETE — FINAL SUMMARY")
@@ -558,5 +532,5 @@ print(f"\nTop Fashion Trend       : "
       f"{trend_analysis.iloc[0]['fashion_category']}")
 print(f"Trend Score             : "
       f"{trend_analysis.iloc[0]['trend_rank']:.4f}")
-print(f"\n✅ READY FOR THESIS WRITING!")
+print(f"\n READY FOR THESIS WRITING!")
 print("="*55)
