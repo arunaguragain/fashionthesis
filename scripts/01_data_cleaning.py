@@ -12,27 +12,26 @@ print("="*50)
 
 # Instagram Files 
 instagram_files = [
-    '../data/raw/dataset_instagram-hashtag-scraper_batch1_.csv',
-    '../data/raw/dataset_instagram-hashtag-scraper_Batch2_.csv',
-    '../data/raw/dataset_instagram-hashtag-scraper_Batch3_.csv',
-    '../data/raw/dataset_instagram-hashtag-scraper_Batch4_.csv',
-    '../data/raw/dataset_instagram-hashtag-scraper_Batch5_.csv',
-    '../data/raw/dataset_instagram-hashtag-scraper_Batch6_.csv',
-    '../data/raw/dataset_instagram-hashtag-scraper_Batch7_.csv',
-    '../data/raw/dataset_instagram-hashtag-scraper_Batch8_.csv',
-    '../data/raw/dataset_instagram-hashtag-scraper_2026-04-23_15-10-22-443.csv',
+    '../data/raw/instagram/dataset_instagram-hashtag-scraper(Batch1).csv',
+    '../data/raw/instagram/dataset_instagram-hashtag-scraper(Batch2).csv',
+    '../data/raw/instagram/dataset_instagram-hashtag-scraper(Batch3).csv',
+    '../data/raw/instagram/dataset_instagram-hashtag-scraper(Batch4).csv',
+    '../data/raw/instagram/dataset_instagram-hashtag-scraper(Batch5).csv',
+    '../data/raw/instagram/dataset_instagram-hashtag-scraper(Batch6).csv',
+    '../data/raw/instagram/dataset_instagram-hashtag-scraper(Batch7).csv',
+    '../data/raw/instagram/dataset_instagram-hashtag-scraper(Batch8).csv',
 ]
 
 # TikTok Files 
 tiktok_files = [
-    '../data/raw/dataset_tiktok-hashtag-scraper_Batch1_.csv',
-    '../data/raw/dataset_tiktok-hashtag-scraper_Batch2_.csv',
-    '../data/raw/dataset_tiktok-hashtag-scraper_Batch3_.csv',
-    '../data/raw/dataset_tiktok-hashtag-scraper_Batch4_.csv',
-    '../data/raw/dataset_tiktok-hashtag-scraper_Batch5_.csv',
-    '../data/raw/dataset_tiktok-hashtag-scraper_Batch6_.csv',
-    '../data/raw/dataset_tiktok-hashtag-scraper_batch7_.csv',
-    '../data/raw/dataset_tiktok-hashtag-scraper_Batch8_.csv',
+    '../data/raw/tiktok/dataset_tiktok-hashtag-scraper(Batch1).csv',
+    '../data/raw/tiktok/dataset_tiktok-hashtag-scraper(Batch2).csv',
+    '../data/raw/tiktok/dataset_tiktok-hashtag-scraper(Batch3).csv',
+    '../data/raw/tiktok/dataset_tiktok-hashtag-scraper(Batch4).csv',
+    '../data/raw/tiktok/dataset_tiktok-hashtag-scraper(Batch5).csv',
+    '../data/raw/tiktok/dataset_tiktok-hashtag-scraper(Batch6).csv',
+    '../data/raw/tiktok/dataset_tiktok-hashtag-scraper(Batch7).csv',
+    '../data/raw/tiktok/dataset_tiktok-hashtag-scraper(Batch8).csv',
 ]
 
 # Load Instagram
