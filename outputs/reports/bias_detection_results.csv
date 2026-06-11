@@ -1,0 +1,5 @@
+Bias_Type,Score,Status
+Platform Bias,0.1773,HIGH - Documented
+Language Bias,0.09199999999999997,Acceptable
+Class Imbalance,11.59497645211931,SEVERE - Imbalanced
+Category Range,0.20240000000000002,MEDIUM

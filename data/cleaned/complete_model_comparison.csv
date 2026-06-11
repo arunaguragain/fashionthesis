@@ -1,0 +1,6 @@
+Model,Phase,Dataset,Test_Accuracy
+Naive Bayes,Phase1,Nepal_790,65.82
+SVM,Phase1,Nepal_790,71.52
+Naive Bayes,Phase2,Combined_105k,88.58
+SVM,Phase2,Combined_105k,92.51
+LSTM,Phase2,Combined_105k,95.41632533073425
