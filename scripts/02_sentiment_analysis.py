@@ -81,9 +81,9 @@ def get_sentiment_label(compound_score):
     """
     if compound_score >= 0.05:
         return 'Positive'
-    elif compound_score <= -0.05:
+    elif compound_score <= -0.05: 
         return 'Negative'
-    else:
+    else: 
         return 'Neutral'
 
 # Apply to all posts

@@ -532,5 +532,5 @@ print(f"\nTop Fashion Trend       : "
       f"{trend_analysis.iloc[0]['fashion_category']}")
 print(f"Trend Score             : "
       f"{trend_analysis.iloc[0]['trend_rank']:.4f}")
-print(f"\n READY FOR THESIS WRITING!")
+print(f"\n READY FOR THESIS WRITING!") 
 print("="*55)

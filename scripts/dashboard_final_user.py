@@ -13,7 +13,7 @@ st.set_page_config(
 st.markdown("""
     <style>
     .metric-card {
-        background-color: #f8f9fa;
+        background-color: #f8f9fa; 
         border-radius: 10px;
         padding: 15px;
         border-left: 5px solid #212529;

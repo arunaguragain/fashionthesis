@@ -10,7 +10,7 @@ import glob
 print("="*55)
 print("PHASE 2 - COMBINED DATA CLEANING")
 print("="*55)
-
+ 
 # STEP 1 - DEFINE ALL FILES
 
 print("\nSTEP 1: LOADING ALL FILES")

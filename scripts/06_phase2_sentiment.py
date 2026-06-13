@@ -7,7 +7,7 @@ import re
 import warnings
 warnings.filterwarnings('ignore')
 
-from vaderSentiment.vaderSentiment import (
+from vaderSentiment.vaderSentiment import ( 
     SentimentIntensityAnalyzer
 )
 

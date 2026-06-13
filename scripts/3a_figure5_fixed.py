@@ -11,7 +11,7 @@ from sklearn.svm import LinearSVC
 import warnings
 warnings.filterwarnings('ignore')
 
-df['text_clean'] = df['text_clean'].fillna('')
+df['text_clean'] = df['text_clean'].fillna('') 
 X_text     = df['text_clean']
 y_sent     = df['sentiment']
 

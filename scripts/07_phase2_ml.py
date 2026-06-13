@@ -11,7 +11,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.svm import LinearSVC
 from sklearn.metrics import (
-    classification_report,
+    classification_report, 
     confusion_matrix,
     accuracy_score
 )
