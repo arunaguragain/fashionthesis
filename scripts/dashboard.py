@@ -14,6 +14,7 @@ st.set_page_config(
 
 st.markdown("""
     <style>
+    /* App container and layout tweaks to use full width and remove excess top spacing */
     .stApp {
         background-color: #ffffff !important;
         color: #111827 !important;
@@ -21,8 +22,98 @@ st.markdown("""
     [data-testid="stAppViewContainer"] {
         background-color: #ffffff !important;
     }
+    /* Reduce the built-in top padding so the hero card sits higher on the page */
+    .block-container {
+        padding-top: 8px !important;
+        padding-left: 28px !important;
+        padding-right: 28px !important;
+        max-width: 100% !important;
+    }
+    /* Force header area transparent so our hero card aligns with the page top */
     [data-testid="stHeader"] {
         background: rgba(255,255,255,0) !important;
+    }
+    /* Ensure input labels, dropdowns and buttons use dark text on white */
+    .stMarkdown {
+        color: #111827 !important;
+    }
+    .stButton > button {
+        background-color: #ffffff !important;
+        color: #111827 !important;
+        border: 1px solid #d1d5db !important;
+        height: 44px !important;
+        padding: 8px 14px !important;
+        border-radius: 8px !important;
+        box-sizing: border-box !important;
+    }
+    .stButton > button:hover {
+        border-color: #e91e63 !important;
+        color: #111827 !important;
+    }
+    .stButton > button:focus {
+        box-shadow: 0 0 0 0.2rem rgba(233,30,99,0.2) !important;
+    }
+    div[data-testid="stTextInput"] label,
+    div[data-testid="stSelectbox"] label,
+    div[data-testid="stTextInput"] input,
+    div[data-testid="stSelectbox"] [role="combobox"],
+    div[data-testid="stSelectbox"] span {
+        color: #111827 !important;
+    }
+    /* The custom "Quick Suggestions" heading is already shown above the field. */
+    div[data-testid="stSelectbox"] > label {
+        display: none !important;
+    }
+    div[data-testid="stTextInput"] input,
+    div[data-testid="stSelectbox"] div[role="combobox"] {
+        background-color: #ffffff !important;
+    }
+    /* Make selectbox and text input visually match in height and padding */
+    div[data-testid="stSelectbox"] [role="combobox"],
+    div[data-testid="stTextInput"] input {
+        height: 44px !important;
+        padding: 10px 14px !important;
+        border-radius: 8px !important;
+        box-sizing: border-box !important;
+        vertical-align: middle !important;
+    }
+    /* Render selectbox and text input inline to appear as two columns without nesting */
+    div[data-testid="stSelectbox"] {
+        display: inline-block !important;
+        width: 48% !important;
+        vertical-align: top !important;
+        margin-right: 2% !important;
+    }
+    div[data-testid="stTextInput"] {
+        display: inline-block !important;
+        width: 48% !important;
+        vertical-align: top !important;
+    }
+    .stMarkdown {
+        color: #111827 !important;
+    }
+    .stButton > button {
+        background-color: #ffffff !important;
+        color: #111827 !important;
+        border: 1px solid #d1d5db !important;
+    }
+    .stButton > button:hover {
+        border-color: #e91e63 !important;
+        color: #111827 !important;
+    }
+    .stButton > button:focus {
+        box-shadow: 0 0 0 0.2rem rgba(233,30,99,0.2) !important;
+    }
+    div[data-testid="stTextInput"] label,
+    div[data-testid="stSelectbox"] label,
+    div[data-testid="stTextInput"] input,
+    div[data-testid="stSelectbox"] [role="combobox"],
+    div[data-testid="stSelectbox"] span {
+        color: #111827 !important;
+    }
+    div[data-testid="stTextInput"] input,
+    div[data-testid="stSelectbox"] div[role="combobox"] {
+        background-color: #ffffff !important;
     }
     .lucide-icon {
         width: 16px;
@@ -86,6 +177,16 @@ st.markdown("""
     }
     .post-sentiment-icon.negative {
         color: #f44336;
+    }
+    .post-sentiment-item {
+        margin-bottom: 10px;
+        color: #000;
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+    .post-sentiment-item .post-score {
+        color: #6b7280;
+        font-size: 0.9rem;
     }
     .sentiment-badge {
         display: inline-flex;
@@ -192,14 +293,113 @@ st.markdown("""
     .hero-header {
         background: linear-gradient(135deg, #fffdf5 0%, #ffffff 100%);
         border: 1px solid rgba(0,0,0,0.06);
-        border-radius: 18px;
-        padding: 16px 20px 20px;
-        margin-bottom: 12px;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+        border-radius: 12px;
+        padding: 10px 16px 12px;
+        margin-bottom: 8px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+    }
+    /* Ensure hero title and subtitle are high-contrast and the hero uses full width */
+    .hero-header h1,
+    .hero-header p {
+        font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+    }
+    .hero-header h1 {
+        color: #111827 !important;
+        margin: 0 !important;
+        font-size: 1.4rem !important;
+        line-height: 1.2 !important;
+        font-weight: 700 !important;
+    }
+    .hero-header p {
+        color: #4b5563 !important;
+        font-size: 0.98rem !important;
+        font-weight: 400 !important;
+    }
+    .hero-header {
+        width: calc(100% - 56px) !important;
+        margin-top: 4px !important;
     }
     .section-divider {
         border-top: 1px solid rgba(0,0,0,0.08);
-        margin: 18px 0 24px;
+        margin: 10px 0 0;
+    }
+    .result-verdict {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        background: #ffffff;
+        border: 1px solid rgba(0,0,0,0.08);
+        border-left: 5px solid var(--signal-color);
+        border-radius: 12px;
+        padding: 16px 20px;
+        margin: 4px 0 10px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+    }
+    .result-verdict h2 {
+        margin: 0;
+        color: #111827;
+        font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 1.55rem;
+    }
+    .result-signal {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin: 0;
+        padding: 8px 12px;
+        border: 1.5px solid var(--signal-color);
+        border-radius: 999px;
+        background: #ffffff;
+        color: var(--signal-color);
+        font-size: 0.76rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        white-space: nowrap;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .result-signal-icon {
+        font-size: 1rem;
+        line-height: 1;
+    }
+    .result-summary {
+        margin: 0 0 12px;
+        padding: 12px 16px;
+        border-radius: 8px;
+        background: #f8fafc;
+        border-left: 3px solid #60a5fa;
+        color: #374151;
+        font-size: 0.97rem;
+        line-height: 1.5;
+    }
+    .analytics-snapshot {
+        background: #f8fafc;
+        border: 1px solid #e5e7eb;
+        border-left: 3px solid #c026d3;
+        border-radius: 8px;
+        padding: 12px 14px;
+        color: #374151;
+    }
+    .analytics-snapshot-label {
+        display: block;
+        margin-bottom: 4px;
+        color: #6b7280;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+    .analytics-snapshot-title {
+        color: #111827;
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    .analytics-snapshot-stats {
+        display: flex;
+        gap: 14px;
+        margin-top: 8px;
+        color: #4b5563;
+        font-size: 0.86rem;
     }
     .metric-title {
         font-size: 12px;
@@ -216,13 +416,76 @@ st.markdown("""
         font-weight: 700;
         line-height: 1.2;
     }
+    .metric-trend {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 10px;
+        padding: 5px 9px;
+        border: 1px solid var(--trend-color);
+        border-radius: 999px;
+        color: var(--trend-color);
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+    }
     .metric-card {
         background-color: #ffffff;
-        border-radius: 16px;
-        padding: 18px;
+        border-radius: 14px;
+        padding: 14px 16px;
         border: 1px solid rgba(0,0,0,0.06);
         box-shadow: 0 1px 12px rgba(0,0,0,0.06);
-        margin-bottom: 16px;
+        margin-bottom: 10px;
+    }
+    .metric-pair {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+    .metric-pair .metric-card {
+        margin-bottom: 0;
+    }
+    div[data-testid="stPlotlyChart"] {
+        background: #f8fafc;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        padding: 8px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+        box-sizing: border-box;
+    }
+    .trend-insight-card {
+        min-height: 300px;
+        padding: 20px;
+        border: 1px solid #e5e7eb;
+        border-left: 4px solid #e91e63;
+        border-radius: 14px;
+        background: #ffffff;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+        box-sizing: border-box;
+    }
+    .trend-insight-card h3 {
+        margin: 0 0 14px;
+        color: #111827;
+        font-size: 1.2rem;
+    }
+    .trend-insight-score {
+        margin: 0 0 4px;
+        color: #e91e63;
+        font-size: 2rem;
+        font-weight: 700;
+    }
+    .trend-insight-copy {
+        margin: 14px 0 0;
+        color: #4b5563;
+        line-height: 1.6;
+    }
+    .sentiment-overview {
+        min-height: 210px;
+        padding: 20px;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        background: #f8fafc;
+        box-sizing: border-box;
     }
     .ethics-text {
         color: #4b5563;
@@ -646,29 +909,11 @@ def get_model_confidence(user_text):
         return None
 
 
-def on_text_change():
-    new_val = get_session_value("text_input_key", "").strip()
-    set_session_value("current_search", new_val)
-    set_session_value("trigger_analysis", False)
-
-
-def on_dropdown_change():
-    pick = get_session_value("dropdown_key", "")
-    if pick != "-- Click to pick a keyword --":
-        set_session_value("current_search", pick)
-        set_session_value("text_input_key", pick)
-        set_session_value("trigger_analysis", False)
-    else:
-        set_session_value("current_search", "")
-        set_session_value("text_input_key", "")
-        set_session_value("trigger_analysis", False)
-
-
 st.markdown(
     """
     <div class="hero-header">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;">
-            <div>
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                 <h1 style="margin:0; font-size:2rem; letter-spacing: -0.03em; display:flex; align-items:center; gap:10px;">
                     <svg class="lucide-icon header-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 2l1.24 3.68L17 6.5l-2.84 1.78L14.5 12 12 10.36 9.5 12l.34-3.72L7 6.5l3.76-.82L12 2z" />
@@ -676,7 +921,7 @@ st.markdown(
                     </svg>
                     <span>Nepal Fashion Trend Detector</span>
                 </h1>
-                <p style="margin:8px 0 0; color:#4b5563; font-size:1rem;">For Nepali females aged 18-26</p>
+                <p style="margin:0; color:#4b5563; font-size:1rem; white-space:nowrap;">For Nepali females aged 18-26</p>
             </div>
         </div>
         <div class="section-divider"></div>
@@ -684,101 +929,123 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-st.write("---")
 
-left_col, right_col = st.columns([1, 1.2], gap="large")
+# Search Parameters is the form heading; the two input choices sit beneath it.
+st.markdown(
+    "<div style='display:flex; align-items:center; gap:10px; margin:-0.25rem 0 0.7rem;'>"
+    "<svg class='lucide-icon section-icon search' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>"
+    "<circle cx='11' cy='11' r='7' />"
+    "<path d='M21 21l-4.35-4.35' />"
+    "</svg>"
+    "<span style='font-size:1.1rem; font-weight:600; color:#111827;'>Search Parameters</span>"
+    "</div>",
+    unsafe_allow_html=True
+)
 
-with left_col:
-    st.markdown(
-        "<div style='display:flex; align-items:center; gap:10px; margin-bottom:0.75rem;'>"
-        "<svg class='lucide-icon section-icon search' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>"
-        "<circle cx='11' cy='11' r='7' />"
-        "<path d='M21 21l-4.35-4.35' />"
-        "</svg>"
-        "<span style='font-size:1.1rem; font-weight:600; color:#111827;'>Search Parameters</span>"
-        "</div>",
-        unsafe_allow_html=True
-    )
+suggestions = [
+    "Saree", "Cotton Kurti Set", "Blue Denim Jacket",
+    "Handmade Dhaka Dress", "White Office Shirt",
+    "Leather Handbag", "Black Formal Suit",
+    "Red Lehenga"
+]
 
-    suggestions = [
-        "Saree", "Cotton Kurti Set", "Blue Denim Jacket",
-        "Handmade Dhaka Dress", "White Office Shirt",
-        "Leather Handbag", "Black Formal Suit",
-        "Red Lehenga"
-    ]
+default_idx = 0
+if current_search in suggestions:
+    default_idx = suggestions.index(current_search) + 1
 
-    default_idx = 0
-    if current_search in suggestions:
-        default_idx = suggestions.index(current_search) + 1
+with st.form("search_form"):
+    left_col, input_col, right_col = st.columns([1, 1, 1.2], gap="large")
 
-    st.markdown(
-        "<div style='display:flex; align-items:center; gap:10px; margin-bottom:0.5rem;'>"
-        "<svg class='lucide-icon section-icon quick' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>"
-        "<path d='M12 5v14' />"
-        "<path d='M6 9h12' />"
-        "<path d='M6 15h12' />"
-        "</svg>"
-        "<strong style='color:#111827;'>Quick Suggestions:</strong>"
-        "</div>",
-        unsafe_allow_html=True
-    )
-    st.selectbox(
-        "Quick Suggestions",
-        options=["-- Click to pick a keyword --"] + suggestions,
-        index=default_idx,
-        key="dropdown_key",
-        on_change=on_dropdown_change
-    )
-
-    st.markdown(
-        "<div style='display:flex; align-items:center; gap:10px; margin-bottom:0.5rem;'>"
-        "<svg class='lucide-icon section-icon input' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>"
-        "<path d='M21 11.5v6.5a2 2 0 0 1-2 2h-6.5' />"
-        "<path d='M16 3l5 5-11 11H5v-5L16 3z' />"
-        "</svg>"
-        "<strong style='color:#111827;'>Or type any fashion item:</strong>"
-        "</div>",
-        unsafe_allow_html=True
-    )
-    st.text_input(
-        "Fashion item input",
-        placeholder="e.g., saree, denim jacket, office blazer",
-        key="text_input_key",
-        on_change=on_text_change
-    )
-
-    if not current_search.strip():
-        set_session_value("trigger_analysis", False)
-
-    st.write("")
-    if st.button("Predict the trend", key="predict_btn"):
-        typed_value = get_session_value("text_input_key", "").strip()
-        set_session_value("current_search", typed_value)
-        set_session_value("trigger_analysis", bool(typed_value))
-
-with right_col:
-    st.markdown(
-        "<div style='display:flex; align-items:center; gap:10px; margin-bottom:1rem;'>"
-        "<svg class='lucide-icon section-icon analytics' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>"
-        "<path d='M4 19V5' />"
-        "<path d='M12 19V11' />"
-        "<path d='M20 19V15' />"
-        "</svg>"
-        "<span style='font-size:1.1rem; font-weight:600; color:#111827;'>Analytics Report</span>"
-        "</div>",
-        unsafe_allow_html=True
-    )
-
-    if not (get_session_value("trigger_analysis", False) and
-            get_session_value("current_search", "").strip()):
+    with left_col:
         st.markdown(
-            "<div style='background-color: #e3f2fd; border-left: 4px solid #2196F3; padding: 12px; border-radius: 4px;'>"
-            "<p style='margin: 0; color: #1565c0;'>"
-            "<strong>Type any fashion keyword</strong> or full sentence (colors, brands, occasions all work!) and "
-            "click <strong>'Predict the trend'</strong> to see the full analysis here."
-            "</p></div>",
+            "<div style='display:flex; align-items:center; gap:10px; margin-bottom:0.25rem;'>"
+            "<svg class='lucide-icon section-icon quick' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>"
+            "<path d='M12 5v14' />"
+            "<path d='M6 9h12' />"
+            "<path d='M6 15h12' />"
+            "</svg>"
+            "<strong style='color:#111827;'>Quick Suggestions</strong>"
+            "</div>",
             unsafe_allow_html=True
         )
+
+        st.selectbox(
+            "Quick Suggestions",
+            options=["-- Click to pick a keyword --"] + suggestions,
+            index=default_idx,
+            key="dropdown_key"
+        )
+
+    with input_col:
+        st.markdown(
+            "<div style='display:flex; align-items:center; gap:10px; margin-bottom:0.25rem;'>"
+            "<svg class='lucide-icon section-icon input' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>"
+            "<path d='M21 11.5v6.5a2 2 0 0 1-2 2h-6.5' />"
+            "<path d='M16 3l5 5-11 11H5v-5L16 3z' />"
+            "</svg>"
+            "<strong style='color:#111827;'>Or type any fashion item</strong>"
+            "</div>",
+            unsafe_allow_html=True
+        )
+
+        st.text_input(
+            "",
+            placeholder="e.g., saree, denim jacket, office blazer",
+            key="text_input_key"
+        )
+
+    with right_col:
+        st.markdown(
+            "<div style='display:flex; align-items:center; gap:10px; margin-bottom:1rem;'>"
+            "<svg class='lucide-icon section-icon analytics' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>"
+            "<path d='M4 19V5' />"
+            "<path d='M12 19V11' />"
+            "<path d='M20 19V15' />"
+            "</svg>"
+            "<span style='font-size:1.1rem; font-weight:600; color:#111827;'>Analytics Report</span>"
+            "</div>",
+            unsafe_allow_html=True
+        )
+
+        if not (get_session_value("trigger_analysis", False) and
+                get_session_value("current_search", "").strip()):
+            st.markdown(
+                "<div style='background-color: #e3f2fd; border-left: 4px solid #2196F3; padding: 12px; border-radius: 4px;'>"
+                "<p style='margin: 0; color: #1565c0;'>"
+                "<strong>Type any fashion keyword</strong> or full sentence (colors, brands, occasions all work!) and "
+                "click <strong>'Predict the trend'</strong> to see the full analysis here."
+                "</p></div>",
+                unsafe_allow_html=True
+            )
+        else:
+            preview = get_trend_result(get_session_value("current_search", ""))
+            st.markdown(f"""
+                <div class="analytics-snapshot">
+                    <span class="analytics-snapshot-label">Current analysis</span>
+                    <div class="analytics-snapshot-title">{preview['category']}</div>
+                    <div class="analytics-snapshot-stats">
+                        <span>{preview['pos_pct']}% positive</span>
+                        <span>{preview['posts']:,} posts</span>
+                    </div>
+                </div>
+            """, unsafe_allow_html=True)
+
+    btn_left, btn_center, btn_right = st.columns([1, 0.6, 1], gap='large')
+    with btn_center:
+        submitted = st.form_submit_button("Predict the trend")
+
+    if submitted:
+        typed_value = get_session_value("text_input_key", "").strip()
+        dropdown_value = get_session_value("dropdown_key", "")
+        selected_search = typed_value or (dropdown_value if dropdown_value != "-- Click to pick a keyword --" else "")
+        set_session_value("current_search", selected_search)
+        set_session_value("trigger_analysis", bool(selected_search))
+
+        if selected_search and dropdown_value != selected_search:
+            set_session_value("dropdown_key", "-- Click to pick a keyword --")
+
+        if selected_search and typed_value != selected_search:
+            set_session_value("text_input_key", selected_search)
 
 if (get_session_value("trigger_analysis", False) and
         get_session_value("current_search", "").strip()):
@@ -799,14 +1066,14 @@ if (get_session_value("trigger_analysis", False) and
         badge_bg = "#F5F5F5"
 
     display_category = result['category']
-    st.markdown(f"""
-    <div style="background-color: {badge_bg}; border: 2px solid {badge_color}; border-radius: 12px; padding: 20px; margin-bottom: 16px;">
-        <h2 style="margin: 0; color: {badge_color}; text-align: center;">{display_category}</h2>
-        <p style="margin: 8px 0 0; color: {badge_color}; text-align: center; font-weight: 600;">{signal_text}</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-    st.write("")
+    verdict_col, summary_col = st.columns([1, 2.1], gap='medium')
+    if False:  # Category is already shown in the metric card beside the chart.
+        st.markdown(f"""
+        <div class="result-verdict" style="--signal-color: {badge_color};">
+        <h2>{display_category}</h2>
+        <p class="result-signal"><span class="result-signal-icon">✦</span>{signal_text}</p>
+        </div>
+        """, unsafe_allow_html=True)
 
     # ── 2. ONE SENTENCE SUMMARY ──
     summary = (
@@ -814,10 +1081,6 @@ if (get_session_value("trigger_analysis", False) and
         f"LOVE this style ({result['pos_pct']}% positive) — "
         f"it's the #{result['rank']} trending category in Nepal right now!"
     )
-    st.markdown(f"*{summary}*")
-
-    st.write("")
-
     # ── 2a. SENTIMENT BREAKDOWN & METRIC SUMMARY ──
     sentiment_label = f"{result['pos_pct']}% Positive · {result['neutral_pct']}% Neutral · {result['neg_pct']}% Negative"
     sentiment_fig = go.Figure(go.Pie(
@@ -829,35 +1092,35 @@ if (get_session_value("trigger_analysis", False) and
         hovertemplate='%{label}: %{value}%<extra></extra>',
         sort=False,
         hole=0.45,
+        domain=dict(x=[0.52, 1], y=[0.06, 0.96]),
         showlegend=False
     ))
     sentiment_fig.update_layout(
-        margin=dict(l=0, r=0, t=0, b=0),
-        height=320,
-        plot_bgcolor='rgba(0,0,0,0)',
-        paper_bgcolor='rgba(0,0,0,0)'
+        margin=dict(l=18, r=18, t=14, b=14),
+        height=280,
+        font=dict(color='#111827'),
+        plot_bgcolor='#f8fafc',
+        paper_bgcolor='#f8fafc',
+        annotations=[
+            dict(x=0.03, y=0.88, xref='paper', yref='paper', showarrow=False,
+                 xanchor='left', text='<b>What People Are Saying</b>',
+                 font=dict(size=20, color='#111827')),
+            dict(x=0.03, y=0.62, xref='paper', yref='paper', showarrow=False,
+                 xanchor='left', align='left',
+                 text='<span style="color:#4CAF50">●</span> Positive&nbsp;&nbsp; '
+                      '<span style="color:#9E9E9E">●</span> Neutral&nbsp;&nbsp; '
+                      '<span style="color:#F44336">●</span> Negative',
+                 font=dict(size=13, color='#4b5563')),
+            dict(x=0.03, y=0.40, xref='paper', yref='paper', showarrow=False,
+                 xanchor='left', align='left', text=sentiment_label,
+                 font=dict(size=13, color='#4b5563'))
+        ]
     )
 
-    left_panel, right_panel = st.columns([1.8, 1], gap='large')
-    with left_panel:
-        st.markdown(
-            "<div style='padding:20px 0 0 0;'>"
-            "<h3 style='margin:0 0 10px; color:#111827;'>What People Are Saying</h3>"
-            "<div style='display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-bottom:12px;'>"
-            "<span class='sentiment-badge'><span class='sentiment-dot sentiment-positive'></span>Positive</span>"
-            "<span class='sentiment-badge'><span class='sentiment-dot sentiment-neutral'></span>Neutral</span>"
-            "<span class='sentiment-badge'><span class='sentiment-dot sentiment-negative'></span>Negative</span>"
-            "</div>"
-            f"<p style='margin:0 0 20px; color:#4b5563; font-size:0.95rem;'>{sentiment_label}</p>"
-            "</div>",
-            unsafe_allow_html=True
-        )
-        st.plotly_chart(sentiment_fig, use_container_width=True)
-
-    with right_panel:
-        st.markdown("<div style='display:grid; gap:14px; padding-top:8px;'>", unsafe_allow_html=True)
+    cards_col, sentiment_col = st.columns([1, 2], gap='large')
+    with cards_col:
         st.markdown(f"""
-            <div class="metric-card" style="background-color:#ffffff; border-left-color:#4CAF50;">
+            <div class="metric-card" style="background-color:#ffffff; border-left-color:#4CAF50; --trend-color:{badge_color};">
                 <div style='display:flex; align-items:center; gap:8px; margin-bottom:10px;'>
                     <svg class='lucide-icon metric-icon detected' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
                         <path d='M18.5 6.5L17.5 5.5a2 2 0 0 0-2.83 0l-7 7a2 2 0 0 0 0 2.83l1 1a2 2 0 0 0 2.83 0l7-7a2 2 0 0 0 0-2.83z' />
@@ -866,33 +1129,37 @@ if (get_session_value("trigger_analysis", False) and
                     <div class="metric-title">Detected As</div>
                 </div>
                 <div class="metric-value">{result['category']}</div>
+                <div class="metric-trend">✦ {signal_text}</div>
             </div>
         """, unsafe_allow_html=True)
+    with cards_col:
         st.markdown(f"""
-            <div class="metric-card" style="background-color:#ffffff; border-left-color:#4CAF50;">
-                <div style='display:flex; align-items:center; gap:8px; margin-bottom:10px;'>
-                    <svg class='lucide-icon metric-icon love' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
-                        <path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67 10.94 4.61a5.5 5.5 0 1 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z' />
-                    </svg>
-                    <div class="metric-title">People Who Love It</div>
+            <div class="metric-pair">
+                <div class="metric-card" style="background-color:#ffffff; border-left-color:#4CAF50;">
+                    <div style='display:flex; align-items:center; gap:8px; margin-bottom:10px;'>
+                        <svg class='lucide-icon metric-icon love' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67 10.94 4.61a5.5 5.5 0 1 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z' />
+                        </svg>
+                        <div class="metric-title">People Who Love It</div>
+                    </div>
+                    <div class="metric-value">{result['pos_pct']}%</div>
                 </div>
-                <div class="metric-value">{result['pos_pct']}%</div>
+                <div class="metric-card" style="background-color:#ffffff; border-left-color:#4CAF50;">
+                    <div style='display:flex; align-items:center; gap:8px; margin-bottom:10px;'>
+                        <svg class='lucide-icon metric-icon based' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                            <ellipse cx='12' cy='6' rx='8' ry='3' />
+                            <path d='M4 6v6a8 3 0 0 0 16 0V6' />
+                            <path d='M4 12v6a8 3 0 0 0 16 0v-6' />
+                        </svg>
+                        <div class="metric-title">Based On</div>
+                    </div>
+                    <div class="metric-value">{result['posts']:,} real posts</div>
+                </div>
             </div>
         """, unsafe_allow_html=True)
-        st.markdown(f"""
-            <div class="metric-card" style="background-color:#ffffff; border-left-color:#4CAF50;">
-                <div style='display:flex; align-items:center; gap:8px; margin-bottom:10px;'>
-                    <svg class='lucide-icon metric-icon based' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
-                        <ellipse cx='12' cy='6' rx='8' ry='3' />
-                        <path d='M4 6v6a8 3 0 0 0 16 0V6' />
-                        <path d='M4 12v6a8 3 0 0 0 16 0v-6' />
-                    </svg>
-                    <div class="metric-title">Based On</div>
-                </div>
-                <div class="metric-value">{result['posts']:,} real posts</div>
-            </div>
-        """, unsafe_allow_html=True)
-        st.markdown("</div>", unsafe_allow_html=True)
+
+    with sentiment_col:
+        st.plotly_chart(sentiment_fig, use_container_width=True)
 
     st.write("")
 
@@ -903,10 +1170,6 @@ if (get_session_value("trigger_analysis", False) and
         rank_text = "This style has steady, moderate popularity"
     else:
         rank_text = "This style is less popular right now compared to other categories"
-
-    st.markdown(f"**{rank_text}**")
-
-    st.write("")
 
     # ── 4. COMPARISON CHART ──
     categories = list(REAL_NEPAL_TRENDS.keys())
@@ -927,26 +1190,43 @@ if (get_session_value("trigger_analysis", False) and
         marker_color=colors,
         text=[f"{p}%" for p in percentages],
         textposition='outside',
-        textfont=dict(size=12, color="#ffffff"),
-        marker_line_color='rgba(255,255,255,0.08)',
+        textfont=dict(size=12, color="#111827"),
+        marker_line_color='rgba(17,24,39,0.12)',
         marker_line_width=1,
         width=0.55
     ))
     fig.update_layout(
-        title=f"How '{result['category']}' Compares to Other Trends in Nepal",
+        title=dict(
+            text=f"How '{result['category']}' Compares to Other Trends in Nepal",
+            font=dict(color='#111827')
+        ),
         xaxis=dict(
-            title="% of people who love this style",
+            title=dict(text="% of people who love this style", font=dict(color='#374151')),
             range=[0, 100],
             showgrid=False,
-            tickfont=dict(color='#d0d4db')
+            tickfont=dict(color='#4b5563')
         ),
-        yaxis=dict(autorange="reversed", tickfont=dict(color='#d0d4db')),
+        yaxis=dict(autorange="reversed", tickfont=dict(color='#4b5563')),
+        font=dict(color='#111827'),
         plot_bgcolor='rgba(0,0,0,0)',
         paper_bgcolor='rgba(0,0,0,0)',
         height=420,
         margin=dict(l=140, r=80, t=60, b=40)
     )
-    st.plotly_chart(fig, use_container_width=True)
+    comparison_col, insight_col = st.columns([2.15, 0.85], gap='large')
+    with insight_col:
+        st.markdown(
+            f"<div class='trend-insight-card'>"
+            f"<h3>Trend outlook</h3>"
+            f"<p class='trend-insight-copy' style='margin-top:0;'>{rank_text}</p>"
+            f"<p class='trend-insight-score'>{result['score']}%</p>"
+            f"<span style='color:#6b7280; font-size:0.85rem;'>Overall trend strength</span>"
+            f"<p class='trend-insight-copy'><strong>Why it matters</strong><br>{result['desc']}</p>"
+            f"</div>",
+            unsafe_allow_html=True
+        )
+    with comparison_col:
+        st.plotly_chart(fig, use_container_width=True)
 
     st.write("")
 
@@ -955,9 +1235,8 @@ if (get_session_value("trigger_analysis", False) and
     render_expander(
         "How was this predicted?",
         "<svg class='lucide-icon section-icon prediction' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M14 9a3 3 0 0 1-4 0' /><path d='M10 12v1a2 2 0 0 0 2 2h1' /><path d='M18 8v6a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z' /></svg>",
-        "<p>Category Classification: Support Vector Machine (SVM) with linear kernel, implemented using scikit-learn's LinearSVC. Text was converted to numerical features using TF-IDF vectorization (5,000 features, unigrams and bigrams). The model was trained on 84,354 labeled examples and tested on 21,089 held-out examples, achieving 92.51% accuracy on sentiment classification and 91.91% accuracy on category classification.</p>"
+        "<p>Category Classification: Support Vector Machine (SVM) with linear kernel, implemented using scikit-learn's LinearSVC. Text is converted into numerical features with TF-IDF vectorization (5,000 unigrams and bigrams), and the classifier was trained on a labeled dataset to support category prediction.</p>"
         "<p>Sentiment Scoring: VADER (Valence Aware Dictionary and sEntiment Reasoner), a rule-based NLP sentiment analyzer designed specifically for social media text. VADER assigns a compound score from -1 (most negative) to +1 (most positive) based on word-level sentiment lexicons, capitalization, punctuation, and context cues.</p>"
-        "<p>Accuracy: 91.91% (category classification) measured on a held-out test set of 21,089 records (20% of the combined 105,443-record dataset), not used during model training. Sentiment classification (positive/neutral/negative) achieved 92.51% accuracy on the same test methodology, using 5-fold cross-validation for additional robustness verification (92.70% ± 0.10%).</p>"
         + (f"<p><strong>Model confidence:</strong> {confidence['summary']}</p>" if confidence is not None else "<p><strong>Model confidence:</strong> Not available for fallback keyword matching.</p>")
     )
 
@@ -972,8 +1251,11 @@ if (get_session_value("trigger_analysis", False) and
         "</ul>"
     )
 
-    if result.get('example_posts'):
-        st.markdown("### Sample Posts Analyzed")
+    if False and result.get('example_posts'):
+        st.markdown(
+            "<div style='color:#000 !important; font-size:1.25rem; font-weight:700; opacity:1 !important; margin-bottom:12px;'>Sample Posts Analyzed</div>",
+            unsafe_allow_html=True
+        )
         for example in result['example_posts']:
             badge_color = (
                 "#4CAF50" if example['sentiment'] == "Positive" else
@@ -986,9 +1268,9 @@ if (get_session_value("trigger_analysis", False) and
                 "<svg class='post-sentiment-icon negative' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><circle cx='12' cy='12' r='7' /><path d='M9 9l6 6M15 9l-6 6' /></svg>"
             )
             st.markdown(
-                f"<div style='margin-bottom:10px;'>"
+                f"<div class='post-sentiment-item' style='color:#000 !important;'>"
                 f"<span style='background:{badge_color}; color:#fff; padding:4px 8px; border-radius:12px; font-size:0.85rem; display:inline-flex; align-items:center; gap:6px; margin-right:10px;'>{sentiment_icon}{example['sentiment']}</span>"
-                f"{example['text']} <span style='color:#6b7280;'>(score: {example['score']})</span>"
+                f"{example['text']} <span class='post-score'>(score: {example['score']})</span>"
                 f"</div>",
                 unsafe_allow_html=True
             )
@@ -1006,17 +1288,29 @@ if (get_session_value("trigger_analysis", False) and
         "</ul>"
     )
 
+    if result.get('example_posts'):
+        st.markdown(
+            "<div style='color:#000 !important; font-size:1.25rem; font-weight:700; opacity:1 !important; margin-bottom:12px;'>Sample Posts Analyzed</div>",
+            unsafe_allow_html=True
+        )
+        for example in result['example_posts']:
+            badge_color = (
+                "#4CAF50" if example['sentiment'] == "Positive" else
+                "#9E9E9E" if example['sentiment'] == "Neutral" else
+                "#F44336"
+            )
+            st.markdown(
+                f"<div class='post-sentiment-item' style='color:#000 !important;'>"
+                f"<span style='background:{badge_color}; color:#fff; padding:4px 8px; border-radius:12px; font-size:0.85rem; display:inline-flex; align-items:center; margin-right:10px;'>{example['sentiment']}</span>"
+                f"{example['text']} <span class='post-score'>(score: {example['score']})</span>"
+                f"</div>",
+                unsafe_allow_html=True
+            )
+
     st.write("")
 
     # ── 5. OVERALL TREND STRENGTH ──
-    st.markdown(
-        f"**Overall Trend Strength: {result['score']}%**  \n"
-        f"*(combines popularity + how many people are talking about it)*"
-    )
-
     st.write("")
 
     # ── 5. DETAILED DESCRIPTION ──
-    st.markdown(f"**Why this matters:**  \n{result['desc']}")
-
     st.write("---")
