@@ -1,0 +1,7 @@
+# Large ML files
+data/cleaned/phase2_ml_comparison.csv
+models/*.pkl
+
+# Python cache
+__pycache__/
+*.pyc
