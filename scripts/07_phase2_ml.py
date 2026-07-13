@@ -17,6 +17,7 @@ from sklearn.metrics import (
 )
 from sklearn.utils import resample
 import os
+import joblib
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -275,21 +276,31 @@ print("-"*60)
 
 # Train on combined
 y_cat_combined = combined['fashion_category']
-_, _, y_cat_train, y_cat_test = train_test_split(
+X_cat_train, X_cat_test, y_cat_train, y_cat_test = train_test_split(
     X_combined, y_cat_combined,
     test_size=0.2, random_state=42,
     stratify=y_cat_combined
 )
 
+tfidf_category = TfidfVectorizer(
+    max_features=5000,
+    ngram_range=(1, 2),
+    min_df=2,
+    stop_words='english',
+    sublinear_tf=True
+)
+X_cat_train_v = tfidf_category.fit_transform(X_cat_train)
+X_cat_test_v  = tfidf_category.transform(X_cat_test)
+
 cat_model = LinearSVC(
     C=1.0, max_iter=2000, random_state=42
 )
-cat_model.fit(Xc_train_v, y_cat_train)
-cat_pred = cat_model.predict(Xc_test_v)
+cat_model.fit(X_cat_train_v, y_cat_train)
+cat_pred = cat_model.predict(X_cat_test_v)
 cat_acc  = accuracy_score(y_cat_test, cat_pred)
 
 cat_cv = cross_val_score(
-    cat_model, Xc_train_v, y_cat_train,
+    cat_model, X_cat_train_v, y_cat_train,
     cv=5, scoring='accuracy'
 )
 
@@ -301,8 +312,12 @@ print(f"\nPhase 1 Category Acc    : 38.61%")
 print(f"Phase 2 Category Acc    : {cat_acc*100:.2f}%")
 print(f"Improvement             : "
       f"+{cat_acc*100 - 38.61:.2f}%")
-
-
+print(f"Vocabulary size: {len(tfidf_category.vocabulary_)}")
+print(f"Category classes: {cat_model.classes_}")
+os.makedirs('../models', exist_ok=True)
+joblib.dump(tfidf_category, '../models/tfidf_category.pkl')
+joblib.dump(cat_model, '../models/svm_category_model.pkl')
+print("✅ Category model saved to ../models/")
 # STEP 10 - VISUALIZATIONS
 
 print("\n STEP 10: Creating Visualizations")
